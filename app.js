@@ -74,10 +74,11 @@ function mainMenu(person, people) {
             // HINT: Look for a people-collection stringifier utility function to help
             // let personFamily = findPersonFamily(person[0], people);
             // let personSpouse = findPersonSpouse(person[0], people);
-            let personParents = findPersonParents(person[0], people);
+            // let personParents = findPersonParents(person[0], people);
             // displayPeople(personSpouse);
-            displayPeople(personParents);
-            // alert(personFamily);
+            let personFamily = displayFam(person[0], people);
+            // displayPeople(personParents);
+            alert(personFamily);
             break;
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -212,13 +213,26 @@ function findPersonSpouse(person, people){
 }
 function findPersonParents(person, people){
     let parentList = people.filter(function(el){
-        if (el.parents.includes(person.id)) {
+        if (person.parents.includes(el.id)) {
             return true;
         }
         else{
             return false;
         }});
     return parentList;
+}
+
+function displayFam(person, people){
+    let spouse = findPersonSpouse(person, people);
+    let parents = findPersonParents(person, people);
+    // let siblings = findPersonSibs(person,people);
+    let spouseMap = spouse.map(function(el){
+        return `${person.firstName}'s spouse is ${el.firstName} ${el.lastName}.\n`;
+    });
+    let parentsMap = parents.map(function(el){
+        return `One of their parents is ${el.firstName} ${el.lastName}.\n`;
+    });
+    return spouseMap + parentsMap;
 }
 
 function displayPersonFamily(people) {
@@ -236,8 +250,16 @@ function displayPersonFamily(people) {
 // you'll want to swap the includes statement around
 // person's parents array includes element's id
 
-// function displayFam(person, people){
-//     let spouse = findSpouse(person,p);
-//     let parents = findParents(p,p);
-//     let descendants = findDesc(p,p;
-//     return those 3 items in a collection
+
+
+// This code looks to find a person's descendants
+// function findPersonDescendants(person, people){
+//     let descendantList = people.filter(function(el){
+//         if (el.parents.includes(person.id)) {
+//             return true;
+//         }
+//         else{
+//             return false;
+//         }});
+//     return descendantList;
+// 
