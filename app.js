@@ -72,8 +72,12 @@ function mainMenu(person, people) {
         case "family":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
-            let personFamily = findPersonFamily(person[0], people);
-            alert(personFamily);
+            // let personFamily = findPersonFamily(person[0], people);
+            // let personSpouse = findPersonSpouse(person[0], people);
+            let personParents = findPersonParents(person[0], people);
+            // displayPeople(personSpouse);
+            displayPeople(personParents);
+            // alert(personFamily);
             break;
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
@@ -196,20 +200,44 @@ function chars(input) {
 // Any additional functions can be written below this line 👇. Happy Coding! 😁
 //Developing a findPersonFamily function
 
-function findPersonFamily(individual, array) {
-    let familyFilter = array.filter(function(individual, array){
-        if (individual.parents){
-            if(individual.parents === array.id)
-            {
-                return true
-            }
-            else
-            {
-                return false
-            }
-    }}).map(function(array){
-        return `${array.firstName} ${array.lastName}`;
-    });
-    return familyFilter;
+function findPersonSpouse(person, people){
+    let spouseList = people.filter(function(el){
+        if (el.currentSpouse === person.id) {
+            return true;
+        }
+        else{
+            return false;
+        }});
+    return spouseList;
+}
+function findPersonParents(person, people){
+    let parentList = people.filter(function(el){
+        if (el.parents.includes(person.id)) {
+            return true;
+        }
+        else{
+            return false;
+        }});
+    return parentList;
 }
 
+function displayPersonFamily(people) {
+    alert(
+        people
+            .map(function (person) {
+                return `${person.firstName} ${person.lastName} is their spouse.`;
+            })
+            .join("\n")
+    );
+}
+
+// your parents test is looking to see if person is a parent of someone else (you are actually 
+// finding children instead of parents in that code)
+// you'll want to swap the includes statement around
+// person's parents array includes element's id
+
+// function displayFam(person, people){
+//     let spouse = findSpouse(person,p);
+//     let parents = findParents(p,p);
+//     let descendants = findDesc(p,p;
+//     return those 3 items in a collection
