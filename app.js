@@ -72,18 +72,13 @@ function mainMenu(person, people) {
         case "family":
             //! TODO #2: Declare a findPersonFamily function //////////////////////////////////////////
             // HINT: Look for a people-collection stringifier utility function to help
-            // let personFamily = findPersonFamily(person[0], people);
-            // let personSpouse = findPersonSpouse(person[0], people);
-            // let personParents = findPersonParents(person[0], people);
-            // displayPeople(personSpouse);
-            // displayPeople(personParents);
             let personFamily = displayFam(person[0], people);
             alert(personFamily);
             break;
         case "descendants":
             //! TODO #3: Declare a findPersonDescendants function //////////////////////////////////////////
             // HINT: Review recursion lecture + demo for bonus user story
-            let personDescendants = findPersonDescendants(person[0], people);
+            let personDescendants = displayPersonDescendants(person[0], people);
             alert(personDescendants);
             break;
         case "restart":
@@ -116,7 +111,7 @@ function searchByName(people) {
 
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
-        if (person.firstName === firstName && person.lastName === lastName) {
+        if (person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()) {
             return true;
         }
     });
@@ -211,9 +206,10 @@ function findPersonSpouse(person, people){
         }});
     return spouseList;
 }
+
 function findPersonParents(person, people){
     let parentList = people.filter(function(el){
-        if (person.parents.includes(el.id)) {
+        if (person.parents.length > 0 && person.parents.includes(el.id)) {
             return true;
         }
         else{
@@ -225,7 +221,7 @@ function findPersonParents(person, people){
 function findPersonSiblings(person, people){
     let siblingList = people.filter(function(el){
         if (person !== el) {
-        if (person.parents.toString() === el.parents.toString()) {
+        if (person.parents.length > 0 && person.parents.toString() === el.parents.toString()) {
             return true;
         }
         else{
@@ -250,31 +246,74 @@ function displayFam(person, people){
     return spouseMap + parentsMap + sibsMap;
 }
 
-function displayPersonFamily(people) {
-    alert(
-        people
-            .map(function (person) {
-                return `${person.firstName} ${person.lastName} is their spouse.`;
-            })
-            .join("\n")
-    );
+function findPersonDescendants(person, people){
+    let descendantList = people.filter(function(el){
+        if (el.parents.includes(person.id)) {
+            return true;
+        }
+        else{
+            return false;
+        }});
+    return descendantList;
 }
 
-// your parents test is looking to see if person is a parent of someone else (you are actually 
-// finding children instead of parents in that code)
-// you'll want to swap the includes statement around
-// person's parents array includes element's id
+function displayPersonDescendants(person, people){
+    let descendants = findPersonDescendants(person,people);
+    let descendantsMap = descendants.map(function(el){
+        return `One of their descendants is ${el.firstName} ${el.lastName}.\n`;
+    });
+    return descendantsMap;      
+}
 
+function searchByTraits(trait){
+    let trait = prompt("What trait do you know?").toLowerCase();
+    switch (trait) {
+        case id:
+            return id;
+            break;
+    
+        default:
+            break;
+    }
+}
+/**
+ function searchByName(people) {
+    let firstName = promptFor("What is the person's first name?", chars);
+    let lastName = promptFor("What is the person's last name?", chars);
 
-
-// This code looks to find a person's descendants
-// function findPersonDescendants(person, people){
-//     let descendantList = people.filter(function(el){
-//         if (el.parents.includes(person.id)) {
-//             return true;
-//         }
-//         else{
-//             return false;
-//         }});
-//     return descendantList;
-// 
+    // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
+    let foundPerson = people.filter(function (person) {
+        if (person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
+// End of searchByName()
+function app(people) {
+    // promptFor() is a custom function defined below that helps us prompt and validate input more easily
+    // Note that we are chaining the .toLowerCase() immediately after the promptFor returns its value
+    let searchType = promptFor(
+        "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
+        yesNo
+    ).toLowerCase();
+    let searchResults;
+    // Routes our application based on the user's input
+    switch (searchType) {
+        case "yes":
+            searchResults = searchByName(people);
+            break;
+        case "no":
+            //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
+                //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
+            searchResults = searchByTraits(people);
+            break;
+        default:
+            // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
+            app(people);
+            break;
+    }
+    // Calls the mainMenu() only AFTER we find the SINGLE PERSON
+    mainMenu(searchResults, people);
+}
+**/
