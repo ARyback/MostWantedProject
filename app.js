@@ -76,8 +76,8 @@ function mainMenu(person, people) {
             // let personSpouse = findPersonSpouse(person[0], people);
             // let personParents = findPersonParents(person[0], people);
             // displayPeople(personSpouse);
-            let personFamily = displayFam(person[0], people);
             // displayPeople(personParents);
+            let personFamily = displayFam(person[0], people);
             alert(personFamily);
             break;
         case "descendants":
@@ -222,17 +222,32 @@ function findPersonParents(person, people){
     return parentList;
 }
 
+function findPersonSiblings(person, people){
+    let siblingList = people.filter(function(el){
+        if (person !== el) {
+        if (person.parents.toString() === el.parents.toString()) {
+            return true;
+        }
+        else{
+            return false;
+        }}});
+    return siblingList;
+}
+
 function displayFam(person, people){
     let spouse = findPersonSpouse(person, people);
     let parents = findPersonParents(person, people);
-    // let siblings = findPersonSibs(person,people);
+    let siblings = findPersonSiblings(person,people);
     let spouseMap = spouse.map(function(el){
         return `${person.firstName}'s spouse is ${el.firstName} ${el.lastName}.\n`;
     });
     let parentsMap = parents.map(function(el){
         return `One of their parents is ${el.firstName} ${el.lastName}.\n`;
     });
-    return spouseMap + parentsMap;
+    let sibsMap = siblings.map(function(el){
+        return `One of their siblings is ${el.firstName} ${el.lastName}.\n`;
+    });
+    return spouseMap + parentsMap + sibsMap;
 }
 
 function displayPersonFamily(people) {
