@@ -31,7 +31,9 @@ function app(people) {
         case "no":
             //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
                 //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-            searchResults = searchByTraits(people);
+            // searchResults = searchByTraits(people);
+            searchResults = searchByNumberOfTraits(people);
+            alert(searchResults);
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -54,7 +56,7 @@ function app(people) {
 function mainMenu(person, people) {
     // A check to verify a person was found via searchByName() or searchByTrait()
     if (!person[0]) {
-        alert("Could not find that individual.");
+        alert("Could not find that individual. Please check your spelling and try again.");
         // Restarts app() from the very beginning
         return app(people);
     }
@@ -265,10 +267,10 @@ function displayPersonDescendants(person, people){
     return descendantsMap;      
 }
 
-function searchByNumberOfTraits(){
+function searchByNumberOfTraits(people){
     let numOfTraits = prompt("How many traits do you know? Enter 'one' or 'more than one'").toLowerCase();
-    if (numOfTraits === 'one' || numOfTraits === 'more than one') {
-        return numOfTraits;
+    if (numOfTraits !== 'one' && numOfTraits !== 'more than one') {
+        searchByNumberOfTraits(people);
     }
     switch (numOfTraits) {
         case "one":
@@ -280,6 +282,7 @@ function searchByNumberOfTraits(){
         default:
             break;
     }
+    return numOfTraits;
 }
 
 function searchByTraitsIfOne(people) {
@@ -287,14 +290,14 @@ function searchByTraitsIfOne(people) {
 
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
-        if (person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()) {
+        if (person.firstName.toLowerCase() === soleTrait.toLowerCase()) {
             return true;
         }
     });
     return foundPerson;
 }
 
-function searchByTraitsIfTwo(people) {
+function searchByTraitsIfMoreThanOne(people) {
     let firstTrait = promptFor("What is the trait?", chars);
     let lastName = promptFor("What is the person's last name?", chars);
 
