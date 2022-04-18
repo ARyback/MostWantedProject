@@ -265,55 +265,15 @@ function displayPersonDescendants(person, people){
     return descendantsMap;      
 }
 
-function searchByTraits(trait){
+function searchByTraits(){
     let trait = prompt("What trait do you know?").toLowerCase();
     switch (trait) {
-        case id:
-            return id;
+        case "id":
+            return "hello";
             break;
-    
         default:
             break;
     }
 }
-/**
- function searchByName(people) {
-    let firstName = promptFor("What is the person's first name?", chars);
-    let lastName = promptFor("What is the person's last name?", chars);
 
-    // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
-    let foundPerson = people.filter(function (person) {
-        if (person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()) {
-            return true;
-        }
-    });
-    return foundPerson;
-}
-// End of searchByName()
-function app(people) {
-    // promptFor() is a custom function defined below that helps us prompt and validate input more easily
-    // Note that we are chaining the .toLowerCase() immediately after the promptFor returns its value
-    let searchType = promptFor(
-        "Do you know the name of the person you are looking for? Enter 'yes' or 'no'",
-        yesNo
-    ).toLowerCase();
-    let searchResults;
-    // Routes our application based on the user's input
-    switch (searchType) {
-        case "yes":
-            searchResults = searchByName(people);
-            break;
-        case "no":
-            //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
-                //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-            searchResults = searchByTraits(people);
-            break;
-        default:
-            // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
-            app(people);
-            break;
-    }
-    // Calls the mainMenu() only AFTER we find the SINGLE PERSON
-    mainMenu(searchResults, people);
-}
-**/
+alert(searchByTraits());
