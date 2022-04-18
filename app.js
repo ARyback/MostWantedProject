@@ -276,4 +276,5 @@ function searchByTraits(){
     }
 }
 
-alert(searchByTraits());
+let runSearchByTraits = searchByTraits();
+alert(runSearchByTraits);
