@@ -276,5 +276,18 @@ function searchByTraits(){
     }
 }
 
-let runSearchByTraits = searchByTraits();
-alert(runSearchByTraits);
+function recursiveFindTraits(obj, array = [0]) {
+    let subArray = obj.subsidiaries;
+    array = [obj];
+    //Base case -- Terminating Condition (end of branch)
+    if (subArray.length === 0) {
+        return array;
+    }
+    //Recrusive Case -- Branch has sub-branches, search continues
+    for (let i = 0; i < subArray.length; i++) {
+        array = array.concat(
+            recursiveFindTraits(subArray[i])
+        );
+    }
+    return array;
+}
