@@ -266,18 +266,36 @@ function displayPersonDescendants(person, people){
 }
 
 function searchByNumberOfTraits(){
-    let trait = prompt("How many traits do you know? Enter 'one' or 'more than one'").toLowerCase();
-    switch (trait) {
+    let numOfTraits = prompt("How many traits do you know? Enter 'one' or 'more than one'").toLowerCase();
+    if (numOfTraits === 'one' || numOfTraits === 'more than one') {
+        return numOfTraits;
+    }
+    switch (numOfTraits) {
         case "one":
-            return "hello";
+            return "test";
+            break;
+        case "more than one":
+            return "test two";
             break;
         default:
             break;
     }
 }
 
-function searchByTraitsTakeTwo(people) {
-    let firstName = promptFor("What is the person's first name?", chars);
+function searchByTraitsIfOne(people) {
+    let soleTrait = prompt("What is the trait?", chars);
+
+    // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
+    let foundPerson = people.filter(function (person) {
+        if (person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()) {
+            return true;
+        }
+    });
+    return foundPerson;
+}
+
+function searchByTraitsIfTwo(people) {
+    let firstTrait = promptFor("What is the trait?", chars);
     let lastName = promptFor("What is the person's last name?", chars);
 
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
