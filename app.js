@@ -265,15 +265,28 @@ function displayPersonDescendants(person, people){
     return descendantsMap;      
 }
 
-function searchByTraits(){
-    let trait = prompt("What trait do you know?").toLowerCase();
+function searchByNumberOfTraits(){
+    let trait = prompt("How many traits do you know? Enter 'one' or 'more than one'").toLowerCase();
     switch (trait) {
-        case "id":
+        case "one":
             return "hello";
             break;
         default:
             break;
     }
+}
+
+function searchByTraitsTakeTwo(people) {
+    let firstName = promptFor("What is the person's first name?", chars);
+    let lastName = promptFor("What is the person's last name?", chars);
+
+    // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
+    let foundPerson = people.filter(function (person) {
+        if (person.firstName.toLowerCase() === firstName.toLowerCase() && person.lastName.toLowerCase() === lastName.toLowerCase()) {
+            return true;
+        }
+    });
+    return foundPerson;
 }
 
 function recursiveFindTraits(obj, array = [0]) {
