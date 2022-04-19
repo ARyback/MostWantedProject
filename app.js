@@ -277,27 +277,28 @@ function searchByTrait(people){
         }
         return searchByTraitsIfOne(people);
     } else {
-        searchByTraits(people);
+        searchByTrait(people);
     }
 }
 
-function searchByTraitsIfOne(people) {
+function searchByTraitsIfOne(person, people) {
     let traitType = prompt("What trait do you know about them?\n Do you know their gender, dob, height, weight, or eye color?").toLowerCase();
+    // if (traitType === "gender" || traitType === "dob" ||traitType === "height" ||traitType === "weight" ||traitType === "eye color") 
     switch (traitType){ 
         case "gender":
-            return traitType;
+            return person.gender;
             break;
         case "dob":
-            return traitType;
+            return person.dob;
             break;
         case "height":
-            return traitType;
+            return person.height;
             break;
         case "weight":
-            return traitType;
+            return person.weight;
             break;
         case "eye color":
-            return traitType;
+            return person.eyeColor;
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -307,7 +308,7 @@ function searchByTraitsIfOne(people) {
     let searchTrait = prompt(`What is the value for ${traitType}?`);
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
-        if (person.searchTrait === searchTrait) {
+        if (traitType === searchTrait) {
             return true;
         } else {
             return false;
