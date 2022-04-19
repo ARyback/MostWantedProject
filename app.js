@@ -267,53 +267,60 @@ function displayPersonDescendants(person, people){
     return descendantsMap;      
 }
 
-function searchByTrait(people){
+function searchByTrait(){
     let numOfTraits = prompt("How many traits do you know? Enter 'one' or 'more than one'").toLowerCase();
     if (numOfTraits === 'one' || numOfTraits === 'more than one') {
         if (numOfTraits === 'one') {
-            searchByTraitsIfOne(people);
+            searchByTraitsIfOne();
         } else {
             searchByTraitsIfMoreThanOne(people);
-        }
-        return searchByTraitsIfOne(people);
+        } 
     } else {
         searchByTrait(people);
     }
+    return searchByTraitsIfOne(people);
 }
 
-function searchByTraitsIfOne(person, people) {
+function searchByTraitsIfOne() {
     let traitType = prompt("What trait do you know about them?\n Do you know their gender, dob, height, weight, or eye color?").toLowerCase();
-    // if (traitType === "gender" || traitType === "dob" ||traitType === "height" ||traitType === "weight" ||traitType === "eye color") 
+    // if (traitType === "gender" || traitType === "dob" ||traitType === "height" ||traitType === "weight" ||traitType === "eye color")
+    let foundPersonByTrait; 
+    let searchTrait = prompt(`What is the value for ${traitType}?`);
     switch (traitType){ 
         case "gender":
-            return person.gender;
+            let foundPersonByTrait = people.filter(function (person) {
+                if (person.gender === searchTrait) {
+                    return true;
+                } else {
+                    return false;
+                }
+            });
             break;
         case "dob":
-            return person.dob;
+            trait = person.dob;
             break;
         case "height":
-            return person.height;
+            trait = person.height;
             break;
         case "weight":
-            return person.weight;
+            trait = person.weight;
             break;
         case "eye color":
-            return person.eyeColor;
+            trait = person.eyeColor;
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
             searchByTraitsIfOne(people);
             break;
     }
-    let searchTrait = prompt(`What is the value for ${traitType}?`);
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
-    let foundPerson = people.filter(function (person) {
-        if (traitType === searchTrait) {
-            return true;
-        } else {
-            return false;
-        }
-    });
+    // let foundPerson = people.filter(function (person) {
+    //     if (trait === searchTrait) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // });
     return foundPerson;
 }
 
