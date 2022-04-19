@@ -33,6 +33,7 @@ function app(people) {
                 //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
             searchResults = searchByTrait(people);
             // searchResults = searchByNumberOfTraits(people);
+            searchResultsToDisplay = displayPeople(searchResults)
             alert(searchResults);
             break;
         default:
@@ -267,11 +268,11 @@ function displayPersonDescendants(person, people){
     return descendantsMap;      
 }
 
-function searchByTrait(){
+function searchByTrait(people){
     let numOfTraits = prompt("How many traits do you know? Enter 'one' or 'more than one'").toLowerCase();
     if (numOfTraits === 'one' || numOfTraits === 'more than one') {
         if (numOfTraits === 'one') {
-            searchByTraitsIfOne();
+            searchByTraitsIfOne(people);
         } else {
             searchByTraitsIfMoreThanOne(people);
         } 
@@ -281,32 +282,26 @@ function searchByTrait(){
     return searchByTraitsIfOne(people);
 }
 
-function searchByTraitsIfOne() {
+function searchByTraitsIfOne(people) {
     let traitType = prompt("What trait do you know about them?\n Do you know their gender, dob, height, weight, or eye color?").toLowerCase();
-    // if (traitType === "gender" || traitType === "dob" ||traitType === "height" ||traitType === "weight" ||traitType === "eye color")
-    let foundPersonByTrait; 
+    // if (traitType === "gender" || traitType === "dob" ||traitType === "height" ||traitType === "weight" ||traitType === "eye color") 
     let searchTrait = prompt(`What is the value for ${traitType}?`);
+    let foundPersonByTraitVar;
     switch (traitType){ 
         case "gender":
-            let foundPersonByTrait = people.filter(function (person) {
-                if (person.gender === searchTrait) {
-                    return true;
-                } else {
-                    return false;
-                }
-            });
+            foundPersonByTraitVar = foundPersonByTrait(people, searchTrait);
             break;
         case "dob":
-            trait = person.dob;
+            foundPersonByTraitVar = foundPersonByTrait(people, searchTrait);
             break;
         case "height":
-            trait = person.height;
+            foundPersonByTraitVar = foundPersonByTrait(people, searchTrait);
             break;
         case "weight":
-            trait = person.weight;
+            foundPersonByTraitVar = foundPersonByTrait(people, searchTrait);
             break;
         case "eye color":
-            trait = person.eyeColor;
+            foundPersonByTraitVar = foundPersonByTrait(people, searchTrait);
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
@@ -321,11 +316,18 @@ function searchByTraitsIfOne() {
     //         return false;
     //     }
     // });
-    return foundPerson;
+    return foundPersonByTraitVar;
 }
 
-function findPerson(){
-
+function foundPersonByTrait(people, trait) {
+    let personWithSameTraitsList = people.filter(function(person) {
+    if (person.gender === trait) {
+        return true;
+    } else {
+        return false;
+        }
+    });
+    return personWithSameTraitsList;
 }
 
 function searchByTraitsIfMoreThanOne(people) {
