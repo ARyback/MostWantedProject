@@ -31,8 +31,8 @@ function app(people) {
         case "no":
             //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
                 //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-            // searchResults = searchByTraits(people);
-            searchResults = searchByNumberOfTraits(people);
+            searchResults = searchByTraits(people);
+            // searchResults = searchByNumberOfTraits(people);
             alert(searchResults);
             break;
         default:
@@ -267,34 +267,50 @@ function displayPersonDescendants(person, people){
     return descendantsMap;      
 }
 
-function searchByNumberOfTraits(people){
+function searchByTraits(people){
     let numOfTraits = prompt("How many traits do you know? Enter 'one' or 'more than one'").toLowerCase();
-    if (numOfTraits !== 'one' && numOfTraits !== 'more than one') {
-        searchByNumberOfTraits(people);
+    if (numOfTraits === 'one' || numOfTraits === 'more than one') {
+        if (numOfTraits === 'one') {
+            searchByTraitsIfOne(people);
+        } else {
+            searchByTraitsIfMoreThanOne(people);
+        }
+        return searchByTraitsIfOne(people);
+    } else {
+        searchByTraits(people);
     }
-    switch (numOfTraits) {
-        case "one":
-            return "test";
-            break;
-        case "more than one":
-            return "test two";
-            break;
-        default:
-            break;
-    }
-    return numOfTraits;
 }
 
 function searchByTraitsIfOne(people) {
-    let soleTrait = prompt("What is the trait?", chars);
-
+    let soleTrait = prompt("What trait do you know about them?\n Do you know their gender, dob, height, weight, or eye color?", chars).toLowerCase();
+    switch (soleTrait){
+        case "gender":
+            break;
+        case "dob":
+            break;
+        case "height":
+            break;
+        case "weight":
+            break;
+        case "eye color":
+            break;
+        default:
+            // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
+            searchByTraitsIfOne(people);
+            break;
+    }
+    let searchTrait = prompt(`What is the value for ${soleTrait}`);
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
-        if (person.firstName.toLowerCase() === soleTrait.toLowerCase()) {
+        if (person.soleTrait === searchTrait) {
             return true;
         }
     });
     return foundPerson;
+}
+
+function findPerson(){
+
 }
 
 function searchByTraitsIfMoreThanOne(people) {
