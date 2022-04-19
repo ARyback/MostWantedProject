@@ -31,7 +31,7 @@ function app(people) {
         case "no":
             //! TODO #4: Declare a searchByTraits (multiple traits) function //////////////////////////////////////////
                 //! TODO #4a: Provide option to search for single or multiple //////////////////////////////////////////
-            searchResults = searchByTraits(people);
+            searchResults = searchByTrait(people);
             // searchResults = searchByNumberOfTraits(people);
             alert(searchResults);
             break;
@@ -267,7 +267,7 @@ function displayPersonDescendants(person, people){
     return descendantsMap;      
 }
 
-function searchByTraits(people){
+function searchByTrait(people){
     let numOfTraits = prompt("How many traits do you know? Enter 'one' or 'more than one'").toLowerCase();
     if (numOfTraits === 'one' || numOfTraits === 'more than one') {
         if (numOfTraits === 'one') {
@@ -282,28 +282,35 @@ function searchByTraits(people){
 }
 
 function searchByTraitsIfOne(people) {
-    let soleTrait = prompt("What trait do you know about them?\n Do you know their gender, dob, height, weight, or eye color?", chars).toLowerCase();
-    switch (soleTrait){
+    let traitType = prompt("What trait do you know about them?\n Do you know their gender, dob, height, weight, or eye color?").toLowerCase();
+    switch (traitType){ 
         case "gender":
+            return traitType;
             break;
         case "dob":
+            return traitType;
             break;
         case "height":
+            return traitType;
             break;
         case "weight":
+            return traitType;
             break;
         case "eye color":
+            return traitType;
             break;
         default:
             // Re-initializes the app() if neither case was hit above. This is an instance of recursion.
             searchByTraitsIfOne(people);
             break;
     }
-    let searchTrait = prompt(`What is the value for ${soleTrait}`);
+    let searchTrait = prompt(`What is the value for ${traitType}?`);
     // The foundPerson value will be of type Array. Recall that .filter() ALWAYS returns an array.
     let foundPerson = people.filter(function (person) {
-        if (person.soleTrait === searchTrait) {
+        if (person.searchTrait === searchTrait) {
             return true;
+        } else {
+            return false;
         }
     });
     return foundPerson;
